@@ -27,7 +27,7 @@ This is a repository for the project "2020 Summer Olympics Predictions Using Mac
 
 3. Run the application
    ```bash
-   # Add your run commands here
+   python Code.py
    ```
 
 
