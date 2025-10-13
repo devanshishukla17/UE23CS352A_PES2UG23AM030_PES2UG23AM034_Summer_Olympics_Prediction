@@ -11,7 +11,8 @@
 This is a repository for the project "2020 Summer Olympics Predictions Using Machine Learning" using Regressors and Classifiers.
 
 ### Prerequisites
-- [List your prerequisites here]
+- Latest Version of Python
+- VSCode (for better execution)
 
 ### Installation
 1. Clone the repository
