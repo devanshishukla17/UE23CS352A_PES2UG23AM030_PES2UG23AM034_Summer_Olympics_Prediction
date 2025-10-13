@@ -22,7 +22,7 @@ This is a repository for the project "2020 Summer Olympics Predictions Using Mac
 
 2. Install dependencies
    ```bash
-   # Add your installation commands here
+   pip install -r requirements.txt
    ```
 
 3. Run the application
