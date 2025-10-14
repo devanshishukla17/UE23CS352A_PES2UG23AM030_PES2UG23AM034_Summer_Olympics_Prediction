@@ -10,10 +10,6 @@ from sklearn.naive_bayes import GaussianNB
 from sklearn.neural_network import MLPClassifier
 from typing import Dict, Tuple, List, Any
 
-import warnings
-from sklearn.exceptions import ConvergenceWarning
-warnings.filterwarnings("ignore", category=ConvergenceWarning)
-
 validation_year: int = 2016 
 prediction_year: int = 2020 
 
@@ -33,9 +29,10 @@ class Regressor:
         elif model_type == 'Lasso':
             self.model = Lasso(fit_intercept=True)
         elif model_type == 'SVR':
-            self.model = SVR(kernel='poly', degree=3, gamma='scale', epsilon=0.1, C=1.0, max_iter=10000) 
+            self.model = SVR(kernel='poly', degree=3, gamma='scale', epsilon=0.1, C=1.0, 
+                             max_iter=1000000) 
         elif model_type == 'Poisson':
-            self.model = PoissonRegressor(max_iter=10000)
+            self.model = PoissonRegressor(max_iter=1000000)
         elif model_type == 'RandomForest':
             self.model = RandomForestRegressor(max_depth=5, n_estimators=20)
         
@@ -67,20 +64,24 @@ class Regressor:
             self.model.fit(x, y)
             self.model_cv = self.model
 
-#Classifier
+#Classifier       
 class Classifier:
     def __init__(self, model_type: str = 'Logistic_Reg'):
         self.model_type = model_type
+        
+        # Logistic Regression is an iterative solver, keeping max_iter high.
         if model_type == 'Logistic_Reg':
-            self.model = LogisticRegression(max_iter=10000)
+            self.model = LogisticRegression(max_iter=1000000)
         elif model_type == 'SVC':
-            self.model = SVC(kernel="rbf", C=0.025)
+            # FIX: Added and significantly increased max_iter for the SVC iterative solver (SMO).
+            self.model = SVC(kernel="rbf", C=0.025, max_iter=1000000) 
         elif model_type == 'RandomForest':
             self.model = RandomForestClassifier(max_depth=5, n_estimators=20)
         elif model_type == 'GaussianNB':
             self.model = GaussianNB()
         elif model_type == 'MLP':
-            self.model = MLPClassifier(alpha=1, max_iter=10000) 
+            # FIX: MLPClassifier is a Neural Network, which is an iterative solver (epochs). Increased max_iter.
+            self.model = MLPClassifier(alpha=1, max_iter=1000000) 
 
         self.model_cv = None
 
